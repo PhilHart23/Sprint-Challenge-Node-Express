@@ -52,6 +52,40 @@ server.get("/actions/:id", (req, res) => {
      })
 })
 
+// Post a new action
+
+server.post("/actions", (req, res) => {  
+    actions
+     .insert(req.body)
+     .then(action => {
+         res.status(201).json(action);
+     })
+     .catch(err => {
+         res.status(500).json({ message: "There was an error creating a new action" })
+     })
+})
+
+// Update a action 
+
+server.put("/actions/:id", (req, res) => {
+    const { id } = req.params
+    const  changes  = req.body
+    actions
+     .update(id, changes)
+     .then(action => {
+         if (action) {
+             res.status(200).json({ message: "Action updated" })
+         } else {
+           res.status(500).json({ message: "There was an error updating the action" })  
+         }
+     })
+     .catch(err => {
+        res.status(500).json({ message: "There was a error creating a new action", err });
+      });
+  });
+  
+
+
 
 
 
